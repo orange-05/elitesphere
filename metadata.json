@@ -1,0 +1,6 @@
+{
+  "name": "Elitesphere Consultancy",
+  "description": "Elitesphere Consultancy delivers strategic consulting, digital marketing, branding, and technology solutions that help organizations achieve sustainable growth.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
