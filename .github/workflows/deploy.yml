@@ -21,8 +21,12 @@ jobs:
           npm ci
           npm run build
 
+      - name: Remove stale CNAME (if present) 🧹
+        run: rm -f dist/CNAME
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist
           branch: gh-pages
+          clean: true
