@@ -33,7 +33,7 @@ export default function BlogSection() {
   // Featured Post (first featured post, or first post in filtered list)
   const featuredPost = BLOG_POSTS.find(p => p.featured) || BLOG_POSTS[0];
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     setNewsletterError("");
     setNewsletterSaved(false);
@@ -43,7 +43,7 @@ export default function BlogSection() {
       return;
     }
 
-    const success = subscribeNewsletter(newsletterEmail.trim());
+    const success = await subscribeNewsletter(newsletterEmail.trim());
     if (success) {
       setNewsletterSaved(true);
       setNewsletterEmail("");

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://orange-05.github.io/elitesphere/sitemap.xml
