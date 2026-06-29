@@ -110,7 +110,7 @@ export default function App() {
   };
 
   // Submit Contact Form
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError("");
     setFormSuccess(false);
@@ -120,7 +120,7 @@ export default function App() {
       return;
     }
 
-    addInquiry({
+    await addInquiry({
       fullName: fullName.trim(),
       companyName: companyName.trim() ||"N/A",
       emailAddress: emailAddress.trim(),

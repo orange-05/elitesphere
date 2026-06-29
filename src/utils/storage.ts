@@ -1,4 +1,5 @@
 import { ClientProjectState, ContactInquiry, ClientDocument } from "../types";
+import { submitInquiryRemote, subscribeNewsletterRemote } from "./supabase";
 
 // Safe localStorage wrapper to prevent crashes in sandboxed iFrames
 const isStorageAvailable = () => {
@@ -152,7 +153,7 @@ export function saveInquiries(inquiries: ContactInquiry[]): void {
   safeStorage.setItem(KEY_INQUIRIES, JSON.stringify(inquiries));
 }
 
-export function addInquiry(inquiry: Omit<ContactInquiry, "id" | "timestamp" | "status">): ContactInquiry {
+export async function addInquiry(inquiry: Omit<ContactInquiry, "id" | "timestamp" | "status">): Promise<ContactInquiry> {
   const current = getInquiries();
   const newInq: ContactInquiry = {
     ...inquiry,
@@ -162,6 +163,17 @@ export function addInquiry(inquiry: Omit<ContactInquiry, "id" | "timestamp" | "s
   };
   const updated = [newInq, ...current];
   saveInquiries(updated);
+
+  // Fire-and-forget remote persistence (no UI change if it fails).
+  void submitInquiryRemote({
+    full_name: inquiry.fullName,
+    company_name: inquiry.companyName,
+    email_address: inquiry.emailAddress,
+    phone_number: inquiry.phoneNumber,
+    service_interested_in: inquiry.serviceInterestedIn,
+    message: inquiry.message,
+  });
+
   return newInq;
 }
 
@@ -174,11 +186,15 @@ export function getNewsletterEmails(): string[] {
   }
 }
 
-export function subscribeNewsletter(email: string): boolean {
+export async function subscribeNewsletter(email: string): Promise<boolean> {
   const current = getNewsletterEmails();
   if (current.includes(email)) return false;
   current.push(email);
   safeStorage.setItem(KEY_NEWSLETTER, JSON.stringify(current));
+
+  // Fire-and-forget remote persistence.
+  void subscribeNewsletterRemote(email);
+
   return true;
 }
 
