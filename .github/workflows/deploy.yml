@@ -34,9 +34,11 @@ jobs:
           npm ci
           npm run build
 
-      - name: Remove stale CNAME (if present) 🧹
-        run: rm -f dist/CNAME
-
+      # Publish `dist/` to the `gh-pages` branch (clean orphan branch with
+      # only the build output). Configure GitHub Pages to serve from this
+      # branch:
+      #   Repo → Settings → Pages → Source: "Deploy from a branch"
+      #   Branch: gh-pages, / (root)
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
@@ -44,3 +46,5 @@ jobs:
           branch: gh-pages
           clean: true
           single-commit: true
+          git_config_name: "github-actions[bot]"
+          git_config_email: "github-actions[bot]@users.noreply.github.com"
