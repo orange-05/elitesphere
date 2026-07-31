@@ -1,0 +1,50 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+      - deploy/v2-live
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Avoid running duplicate deploys for the same commit SHA
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Setup Node 🔧
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install and Build 📦
+        run: |
+          npm ci
+          npm run build
+
+      # Publish `dist/` to the `gh-pages` branch (clean orphan branch with
+      # only the build output). Configure GitHub Pages to serve from this
+      # branch:
+      #   Repo → Settings → Pages → Source: "Deploy from a branch"
+      #   Branch: gh-pages, / (root)
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist
+          branch: gh-pages
+          clean: true
+          single-commit: true
+          git_config_name: "github-actions[bot]"
+          git_config_email: "github-actions[bot]@users.noreply.github.com"
