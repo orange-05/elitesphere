@@ -3,8 +3,6 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
-![Last Commit](https://img.shields.io/github/last-commit/orange-05/elitesphere?style=for-the-badge)
-![Repo Size](https://img.shields.io/github/repo-size/orange-05/elitesphere?style=for-the-badge)
 
 > **Elite Professional Network Platform** -- A premium networking and career development platform.
 
